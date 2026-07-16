@@ -1,5 +1,10 @@
-name: Patch recovery for fastbootd
-
+- name: Running patch-recovery-revived
+  run: |
+    echo "Downloading recovery file..."
+    curl -L "${{ github.event.inputs.recovery_link }}" -o recovery_file
+    file recovery_file  # Check file type
+    ls -lh recovery_file  # Check file size
+    GOFILE=1 bash patch-recovery.sh "${{ github.event.inputs.recovery_link }}" "${{ github.event.inputs.model }}"
 on:
   workflow_dispatch:
     inputs:
